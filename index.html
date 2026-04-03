@@ -1,48 +1,190 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bayona: Guía Pro</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Guía Bayona">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-    body{font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:contain}
-    .no-scrollbar::-webkit-scrollbar{display:none}
-    .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom) + 5rem)}
-    .glass{background:rgba(255,255,255,.8);backdrop-filter:blur(10px)}
-    .fade-in{animation:fadeIn .4s ease-out}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bayona: Guía Pro</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Guía Bayona">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        body { font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 5rem); }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
-  <div id="root"></div>
-  <script type="text/babel">
-    const { useState, useRef } = React;
-    const stops = [
-      {id:1,time:'11:00',title:'Exterior de la Catedral',mapQuery:'Cathédrale Sainte-Marie de Bayonne, France',directions:'Punto de inicio recomendado: aparcamiento de las Allées Paulmy o alrededores de la oficina de turismo. Desde allí, subid a pie hacia la "Cathédrale Sainte‑Marie de Bayonne"; la veréis enseguida dominando el casco antiguo.',audioText:'Estamos ante la catedral de Sainte‑Marie de Bayona, el edificio que marca el perfil de la ciudad con sus dos agujas neogóticas. La catedral actual se empezó a construir en el siglo XIII, en estilo gótico, sobre una iglesia anterior que había sido destruida por varios incendios, y las torres que vemos hoy se añadieron en el siglo XIX. Bayona fue durante siglos una plaza estratégica entre el Atlántico y los Pirineos, y este templo lo refleja: aquí se cruzaban comerciantes, peregrinos y soldados. La catedral forma parte de los Caminos de Santiago en Francia y, junto con su claustro, está inscrita en la Lista del Patrimonio Mundial de la UNESCO desde 1998. Si miráis alrededor, veréis cómo el caserío del casco antiguo se organiza en pendiente, con calles estrechas y casas altas que buscan la luz por encima de las murallas. Esa mezcla de ciudad fortificada y ciudad comercial es una de las señas de identidad de Bayona.'},
-      {id:2,time:'11:30',title:'Interior de la Catedral',mapQuery:'Cathédrale Sainte-Marie de Bayonne, France',directions:'Entrad por la puerta principal o lateral de la catedral y avanzad lentamente por la nave central hasta situaros aproximadamente en el centro, con vista a las vidrieras del coro.',audioText:'Dentro apreciamos mucho mejor el estilo gótico: las columnas delgadas, las bóvedas de crucería y la sensación de verticalidad que hace que la mirada se vaya hacia lo alto. Este tipo de arquitectura buscaba justamente eso: levantar los muros y abrir grandes ventanales para inundar el espacio de luz filtrada por las vidrieras. Fijaos en el coro y en las capillas laterales: muchas de ellas fueron transformándose a lo largo de los siglos, de modo que conviven elementos medievales con decoraciones de época moderna. La catedral conserva también restos de pinturas murales y numerosas tumbas de obispos y notables de la ciudad, lo que nos recuerda el papel que tuvo Bayona como centro religioso y administrativo de la región.'},
-      {id:3,time:'12:00',title:'El Claustro Gótico',mapQuery:'Cloître de la Cathédrale de Bayonne, France',directions:'Desde el interior de la catedral, seguid las indicaciones hacia el claustro. Accederéis a un patio cuadrado rodeado por galerías cubiertas.',audioText:'Este es el claustro de la catedral de Bayona, una auténtica joya del gótico flamígero construida entre los siglos XIV y XVI. Es uno de los claustros más grandes de Francia, y durante siglos funcionó como cementerio de dignatarios eclesiásticos y nobles de la ciudad. El claustro era un espacio de recogimiento y de paso para los canónigos, pero también un lugar de reunión y circulación entre las distintas dependencias de la catedral. Imaginadlo lleno de lápidas, con procesiones discurriendo bajo estas bóvedas y el murmullo constante de la vida religiosa. Hoy, en cambio, es un oasis de calma en pleno centro histórico.'},
-      {id:4,time:'12:15',title:'Jardín Botánico',mapQuery:'Jardin Botanique de Bayonne, France',directions:'Salid del claustro hacia la zona alta de las murallas y seguid las indicaciones al Jardin botanique de Bayonne. El acceso está muy cerca de la catedral.',audioText:'Ahora estamos en el jardín botánico de Bayona, un pequeño espacio verde de unos 3.000 metros cuadrados, suspendido sobre las murallas. Este jardín se creó a finales del siglo XX reutilizando elementos de las antiguas defensas y buscando una atmósfera íntima, casi secreta, en pleno corazón de la ciudad. El diseño tiene inspiración japonizante: pequeños puentes, una cascada, senderos sinuosos y colecciones de plantas exóticas y locales. Desde algunos puntos del jardín se ven tanto las agujas de la catedral como las casas del Grand Bayonne.'},
-      {id:5,time:'12:30',title:'Mirador de Vauban',mapQuery:'La Poterne Bayonne, France',directions:'Salid del jardín y caminad unos minutos por el paseo de las murallas (parque de la Poterne), buscando un punto con buena vista.',audioText:'Desde aquí se entiende bien Bayona como plaza fuerte. A partir del siglo XVII, el ingeniero militar Vauban rediseñó el sistema defensivo de la ciudad: bastiones, fosos, glacis y pasarelas que convertían Bayona en una auténtica fortaleza en la frontera atlántica. Si os fijáis, la ciudad histórica se organiza dentro de este cinturón de murallas, con la catedral en la parte alta y los barrios que descienden hacia la confluencia de los ríos Adour y Nive. Detrás de esta postal bonita hubo siglos de tensión militar y comercial.'},
-      {id:6,time:'12:45',title:'Paseo por Grand Bayonne',mapQuery:"Rue d'Espagne, Bayonne, France",directions:'Desde las murallas, bajad de nuevo hacia la catedral y tomad la Rue d’Espagne o Rue Poissonnerie en dirección al río Nive.',audioText:'Estamos caminando por el corazón del Grand Bayonne, el barrio que corresponde al núcleo alto de la ciudad. Estas calles estrechas y algo retorcidas siguen todavía la trama medieval. Mirad las fachadas: muchas combinan piedra y entramado de madera, con contraventanas de colores y balcones de hierro. En los siglos XVIII y XIX, cuando Bayona se consolidó como ciudad burguesa, se remodelaron y elevaron muchas de estas casas, pero la escala de las calles siguió siendo íntima.'},
-      {id:7,time:'13:15',title:'Los Muelles de la Nive',mapQuery:'Quai des Corsaires, Bayonne, France',directions:'Id bajando hacia los muelles de la Nive: buscad las zonas de Quai Pannecau o Quai des Corsaires.',audioText:'Estamos en los muelles de la Nive, un punto clave para entender la relación de Bayona con el agua. Durante siglos, por aquí atracaban embarcaciones que descargaban vino, madera, hierro, pescado o cacao. Bayona fue uno de los primeros lugares de Francia donde se desarrolló una auténtica industria del chocolate, gracias a comerciantes judíos expulsados de España y Portugal que se asentaron en la ciudad. Si miráis hacia la otra orilla, veis las fachadas estrechas de Petit Bayonne.'},
-      {id:8,time:'14:30',title:'Petit Bayonne',mapQuery:'Pont Pannecau, Bayonne, France',directions:'Cruzad hacia Petit Bayonne por el Pont Pannecau y seguid por Rue Pannecau.',audioText:'Ahora estamos en Petit Bayonne, el barrio que nació en la Edad Media sobre terrenos marismosos. En el siglo XII se conocía como Bourg‑Neuf. Muchas casas se levantaban sobre pilotes de madera para protegerse de las crecidas. Fijaos en lo estrechas que son las parcelas y en cómo las casas crecen en altura, con fachadas entramadas pintadas en rojo o verde, colores que asociamos hoy a la identidad vasca.'},
-      {id:9,time:'15:00',title:'Callejeo por Petit Bayonne',mapQuery:'Rue des Cordeliers, Bayonne, France',directions:'Id entrando en el interior del barrio por calles como Rue Bourgneuf o Rue des Cordeliers.',audioText:'Estas calles son un auténtico laberinto. Durante siglos aquí vivieron artesanos, marineros y comerciantes procedentes de fuera: gascones, vascos, judíos sefardíes… Bayona fue un puerto cosmopolita. Si levantáis la vista veréis cómo las fachadas se inclinan ligeramente hacia la calle. En algunas casas, los pisos superiores avanzan sobre voladizos de madera, una solución muy típica de los cascos medievales.'},
-      {id:10,time:'15:30',title:'Iglesia de Saint‑André',mapQuery:'Église Saint-André de Bayonne, France',directions:'Id orientándoos hacia Place Paul Bert y la Église Saint‑André.',audioText:'Esta es la iglesia de Saint‑André, un templo neogótico construido a mediados del siglo XIX. A diferencia de la catedral, aquí estamos ante una reinterpretación del estilo gótico en la época en que Francia redescubre sus monumentos medievales. Fijaos en las dos torres gemelas y el gran rosetón central. En el interior la nave es amplia y luminosa, y el órgano del siglo XIX refuerza esa atmósfera solemne.'},
-      {id:11,time:'16:00',title:'Château‑Neuf',mapQuery:'Château-Neuf, Bayonne, France',directions:'Desde Saint‑André, dirigíos hacia el Château‑Neuf siguiendo las calles que bajan hacia el río.',audioText:'El Château‑Neuf es la fortaleza nueva de Bayona. Se levantó a finales de la Edad Media para reforzar la defensa de la ciudad por este flanco. Aunque hoy lo veamos integrado en el tejido urbano, hay que imaginarlo como una pieza clave de un dispositivo defensivo que controlaba el acceso por el Adour y la Nive para resistir los asedios modernos.'},
-      {id:12,time:'16:30',title:'Château‑Vieux',mapQuery:'Château-Vieux, Bayonne, France',directions:'Cruzad de nuevo hacia Grand Bayonne y subid hacia el Château‑Vieux, muy cerca de la catedral.',audioText:'Terminamos la ruta junto al Château‑Vieux, el castillo viejo de Bayona. Esta fortaleza se empezó a levantar en el siglo XI sobre un antiguo castrum romano. En el siglo XVII se integró en el sistema de Vauban. Hoy sigue siendo recinto militar, pero su silueta resume muy bien la historia de Bayona: una ciudad donde se superponen capas romanas, medievales y modernas. Esa concentración de historia es lo que hace de Bayona una ciudad única.'}
-    ];
-    function App(){const [currentStopIndex,setCurrentStopIndex]=useState(0);const [isPlaying,setIsPlaying]=useState(false);const [view,setView]=useState('player');const synthRef=useRef(window.speechSynthesis);const currentStop=stops[currentStopIndex];const generateFullItineraryUrl=()=>{const origin=encodeURIComponent('Allées Paulmy, Bayonne, France');const destination=encodeURIComponent(stops[stops.length-1].mapQuery);const waypoints=stops.slice(0,-1).map(s=>encodeURIComponent(s.mapQuery)).join('|');return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`;};const togglePlay=()=>{if(isPlaying){synthRef.current.cancel();setIsPlaying(false)}else{const u=new SpeechSynthesisUtterance(currentStop.audioText);u.lang='es-ES';u.rate=0.9;u.onend=()=>setIsPlaying(false);synthRef.current.speak(u);setIsPlaying(true)}};const nextStop=()=>{synthRef.current.cancel();setIsPlaying(false);setCurrentStopIndex(p=>Math.min(p+1,stops.length-1));};const prevStop=()=>{synthRef.current.cancel();setIsPlaying(false);setCurrentStopIndex(p=>Math.max(p-1,0));};const openSingleMap=()=>window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(currentStop.mapQuery)}`,'_blank');return <div className="flex flex-col h-screen max-w-md mx-auto bg-slate-50 relative shadow-2xl border-x overflow-hidden"><div className="h-10 bg-red-700 w-full shrink-0"></div><header className="bg-red-700 text-white p-4 shrink-0 flex justify-between items-center shadow-lg z-10"><div><h1 className="font-bold text-xl leading-tight tracking-tight">BAYONA A PIE</h1><p className="text-[10px] text-red-200 tracking-[0.2em] uppercase font-semibold">Guía Profesional</p></div><div className="bg-white/20 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm border border-white/10">{currentStopIndex+1} / {stops.length}</div></header><main className="flex-1 overflow-y-auto no-scrollbar safe-bottom bg-slate-50">{view==='player' && <div className="p-6 space-y-6 fade-in"><div className="space-y-2"><p className="text-red-600 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>PARADA PREVISTA: {currentStop.time}H</p><h2 className="text-3xl font-extrabold text-slate-800 leading-tight">{currentStop.title}</h2></div><div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3"><div className="flex items-center justify-between"><h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>Indicaciones</h3></div><p className="text-slate-600 text-sm leading-relaxed">{currentStop.directions}</p><button onClick={openSingleMap} className="w-full bg-slate-900 text-white py-3 rounded-xl text-xs font-bold hover:bg-black transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6c0 1.88 1.45 3.42 2.1 4.54.85 1.5 2.1 3.25 3.1 4.7.13.19.29.35.48.47.38.24.86.24 1.24 0 .19-.12.35-.28.48-.47 1-1.45 2.25-3.2 3.1-4.7.65-1.12 2.1-2.66 2.1-4.54a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"></path></svg>VER ESTA PARADA</button></div><div className="bg-white p-7 rounded-[2.5rem] border-l-4 border-red-600 shadow-md italic text-slate-700 text-lg leading-relaxed relative"><span className="absolute -top-4 left-6 text-7xl text-slate-100 select-none -z-10 font-serif">“</span>{currentStop.audioText}</div></div>}{view==='list' && <div className="p-4 space-y-3 fade-in"><h3 className="text-xs font-bold text-slate-400 px-2 mb-2 uppercase tracking-widest">Itinerario Completo</h3>{stops.map((s,idx)=><button key={s.id} onClick={()=>{setCurrentStopIndex(idx);setView('player')}} className={`w-full p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 ${idx===currentStopIndex?'bg-red-600 text-white shadow-xl scale-[1.03] z-10':'bg-white border border-slate-100 text-slate-800 active:bg-slate-100'}`}><div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${idx===currentStopIndex?'bg-white text-red-600':'bg-slate-50 text-slate-400'}`}>{s.id}</div><div className="text-left flex-1"><p className="font-bold text-sm leading-tight mb-0.5">{s.title}</p><p className={`text-[10px] font-semibold ${idx===currentStopIndex?'text-red-100':'text-slate-400'}`}>{s.time}H</p></div><svg className={`w-4 h-4 ${idx===currentStopIndex?'text-white/50':'text-slate-200'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg></button>)}</div>}{view==='map' && <div className="p-6 space-y-6 fade-in"><div className="space-y-2"><h2 className="text-3xl font-black text-slate-800 italic">MAPA COMPLETO</h2><p className="text-sm text-slate-500 leading-relaxed">Pulsa el botón de abajo para ver la ruta íntegra (12 paradas) optimizada para ir a pie. Esto abrirá Google Maps con el camino marcado entre cada punto histórico.</p></div><a href={generateFullItineraryUrl()} target="_blank" rel="noopener noreferrer" className="block w-full bg-red-600 text-white text-center py-6 rounded-3xl font-black text-xl shadow-2xl shadow-red-200 hover:brightness-110 active:scale-95 transition-all uppercase tracking-tighter">¡ABRIR RUTA COMPLETA!</a><div className="space-y-3"><p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Resumen del camino</p><div className="bg-white rounded-3xl border border-slate-100 p-4 space-y-3 overflow-hidden relative"><div className="absolute left-6 top-6 bottom-6 w-0.5 bg-slate-100"></div>{stops.slice(0,4).map(s=><div key={s.id} className="flex items-center gap-4 relative z-10"><div className="w-4 h-4 rounded-full bg-red-600 border-4 border-white shadow-sm"></div><span className="text-xs font-semibold text-slate-600">{s.title}</span></div>)}<div className="pl-8 text-[10px] text-slate-400 font-bold italic">...y 8 paradas más hasta Château-Vieux</div></div></div><div className="p-5 bg-blue-50 rounded-3xl border border-blue-100 space-y-2"><div className="flex items-center gap-2"><span className="text-lg">💡</span><p className="text-[10px] font-bold text-blue-900 uppercase tracking-widest">Consejo Pro</p></div><p className="text-xs text-blue-800 leading-relaxed italic">En Google Maps, puedes pulsar "Iniciar" para que el GPS te guíe paso a paso entre los monumentos.</p></div></div>}</main>{view==='player' && <div className="fixed bottom-24 left-0 right-0 max-w-md mx-auto px-8 flex justify-between items-center z-40 pointer-events-none"><button onClick={prevStop} disabled={currentStopIndex===0} className="w-14 h-14 glass rounded-full flex items-center justify-center text-slate-800 disabled:opacity-20 shadow-xl pointer-events-auto active:scale-90 transition-transform"><svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7"></path></svg></button><button onClick={togglePlay} className="w-24 h-24 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl shadow-red-600/50 transform pointer-events-auto active:scale-95 transition-all">{isPlaying?<svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>:<svg className="w-10 h-10 ml-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>}</button><button onClick={nextStop} disabled={currentStopIndex===stops.length-1} className="w-14 h-14 glass rounded-full flex items-center justify-center text-slate-800 disabled:opacity-20 shadow-xl pointer-events-auto active:scale-90 transition-transform"><svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg></button></div>}<nav className="shrink-0 bg-white/90 backdrop-blur-md border-t border-slate-100 h-24 flex justify-around items-center px-6 safe-bottom z-50"><button onClick={()=>setView('player')} className={`flex flex-col items-center gap-1.5 transition-all ${view==='player'?'text-red-600 scale-110':'text-slate-300'}`}><svg className="w-7 h-7" fill={view==='player'?'currentColor':'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg><span className="text-[10px] font-black tracking-widest uppercase">Escuchar</span></button><button onClick={()=>setView('list')} className={`flex flex-col items-center gap-1.5 transition-all ${view==='list'?'text-red-600 scale-110':'text-slate-300'}`}><svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg><span className="text-[10px] font-black tracking-widest uppercase">Paradas</span></button><button onClick={()=>setView('map')} className={`flex flex-col items-center gap-1.5 transition-all ${view==='map'?'text-red-600 scale-110':'text-slate-300'}`}><svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 20l-5.447-2.724A2 2 0 013 15.487V6.513a2 2 0 011.553-1.944L9 4m0 16l6-3m-6 3V4m6 13l5.447 2.724A2 2 0 0021 17.513V8.487a2 2 0 00-1.553-1.944L15 4m0 13V4m0 0L9 7"></path></svg><span className="text-[10px] font-black tracking-widest uppercase">Mapa</span></button></nav></div>}
-    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-  </script>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const stops = [
+            { id: 1, time: "11:00", title: "Exterior de la Catedral", mapQuery: "Cathédrale Sainte-Marie de Bayonne, France", directions: "Punto de inicio recomendado: aparcamiento de las Allées Paulmy o alrededores de la oficina de turismo. Desde allí, subid a pie hacia la 'Cathédrale Sainte‑Marie de Bayonne'; la veréis enseguida dominando el casco antiguo.", audioText: "Estamos ante la catedral de Sainte‑Marie de Bayona, el edificio que marca el perfil de la ciudad con sus dos agujas neogóticas. La catedral actual se empezó a construir en el siglo XIII, en estilo gótico, sobre una iglesia anterior que había sido destruida por varios incendios, y las torres que vemos hoy se añadieron en el siglo XIX. Bayona fue durante siglos una plaza estratégica entre el Atlántico y los Pirineos, y este templo lo refleja: aquí se cruzaban comerciantes, peregrinos y soldados. La catedral forma parte de los Caminos de Santiago en Francia y, junto con su claustro, está inscrita en la Lista del Patrimonio Mundial de la UNESCO desde 1998. Si miráis alrededor, veréis cómo el caserío del casco antiguo se organiza en pendiente, con calles estrechas y casas altas que buscan la luz por encima de las murallas. Esa mezcla de ciudad fortificada y ciudad comercial es una de las señas de identidad de Bayona." },
+            { id: 2, time: "11:30", title: "Interior de la Catedral", mapQuery: "Cathédrale Sainte-Marie de Bayonne, France", directions: "Entrad por la puerta principal o lateral de la catedral y avanzad lentamente por la nave central hasta situaros aproximadamente en el centro, con vista a las vidrieras del coro.", audioText: "Dentro apreciamos mucho mejor el estilo gótico: las columnas delgadas, las bóvedas de crucería y la sensación de verticalidad que hace que la mirada se vaya hacia lo alto. Este tipo de arquitectura buscaba justamente eso: levantar los muros y abrir grandes ventanales para inundar el espacio de luz filtrada por las vidrieras. Fijaos en el coro y en las capillas laterales: muchas de ellas fueron transformándose a lo largo de los siglos, de modo que conviven elementos medievales con decoraciones de época moderna. La catedral conserva también restos de pinturas murales y numerosas tumbas de obispos y notables de la ciudad, lo que nos recuerda el papel que tuvo Bayona como centro religioso y administrativo de la región." },
+            { id: 3, time: "12:00", title: "El Claustro Gótico", mapQuery: "Cloître de la Cathédrale de Bayonne, France", directions: "Desde el interior de la catedral, seguid las indicaciones hacia el claustro. Accederéis a un patio cuadrado rodeado por galerías cubiertas.", audioText: "Este es el claustro de la catedral de Bayona, una auténtica jovial del gótico flamígero construida entre los siglos XIV y XVI. Es uno de los claustros más grandes de Francia, y durante siglos funcionó como cementerio de dignatarios eclesiásticos y nobles de la ciudad. El claustro era un espacio de recogimiento y de paso para los canónigos, pero también un lugar de reunión y circulación entre las distintas dependencias de la catedral. Imaginadlo lleno de lápidas, con procesiones discurriendo bajo estas bóvedas y el murmullo constante de la vida religiosa. Hoy, en cambio, es un oasis de calma en pleno centro histórico." },
+            { id: 4, time: "12:15", title: "Jardín Botánico", mapQuery: "Jardin Botanique de Bayonne, France", directions: "Salid del claustro hacia la zona alta de las murallas y seguid las indicaciones al 'Jardin botanique de Bayonne'. El acceso está muy cerca de la catedral.", audioText: "Ahora estamos en el jardín botánico de Bayona, un pequeño espacio verde de unos 3.000 metros cuadrados, suspendido sobre las murallas. Este jardín se creó a finales del siglo XX reutilizando elementos de las antiguas defensas y buscando una atmósfera íntima, casi secreta, en pleno corazón de la ciudad. El diseño tiene inspiración japonizante: pequeños puentes, una cascada, senderos sinuosos y colecciones de plantas exóticas y locales. Desde algunos puntos del jardín se ven tanto las agujas de la catedral como las casas del Grand Bayonne." },
+            { id: 5, time: "12:30", title: "Mirador de Vauban", mapQuery: "La Poterne Bayonne, France", directions: "Salid del jardín y caminad unos minutos por el paseo de las murallas (parque de la Poterne), buscando un punto con buena vista.", audioText: "Desde aquí se entiende bien Bayona como plaza fuerte. A partir del siglo XVII, el ingeniero militar Vauban rediseñó el sistema defensivo de la ciudad: bastiones, fosos, glacis y pasarelas que convertían Bayona en una auténtica fortaleza en la frontera atlántica. Si os fijáis, la ciudad histórica se organiza dentro de este cinturón de murallas, con la catedral en la parte alta y los barrios que descienden hacia la confluencia de los ríos Adour y Nive. Detrás de esta postal bonita hubo siglos de tensión militar y comercial." },
+            { id: 6, time: "12:45", title: "Paseo por Grand Bayonne", mapQuery: "Rue d'Espagne, Bayonne, France", directions: "Desde las murallas, bajad de nuevo hacia la catedral y tomad la Rue d’Espagne o Rue Poissonnerie en dirección al río Nive.", audioText: "Estamos caminando por el corazón del Grand Bayonne, el barrio que corresponde al núcleo alto de la ciudad. Estas calles estrechas y algo retorcidas siguen todavía la trama medieval. Mirad las fachadas: muchas combinan piedra y entramado de madera, con contraventanas de colores y balcones de hierro. En los siglos XVIII y XIX, cuando Bayona se consolidó como ciudad burguesa, se remodelaron y elevaron muchas de estas casas, pero la escala de las calles siguió siendo íntima." },
+            { id: 7, time: "13:15", title: "Los Muelles de la Nive", mapQuery: "Quai des Corsaires, Bayonne, France", directions: "Id bajando hacia los muelles de la Nive: buscad las zonas de Quai Pannecau o Quai des Corsaires.", audioText: "Estamos en los muelles de la Nive, un punto clave para entender la relación de Bayona con el agua. Durante siglos, por aquí atracaban embarcaciones que descargaban vino, madera, hierro, pescado o cacao. Bayona fue uno de los primeros lugares de Francia donde se desarrolló una auténtica industria del chocolate, gracias a comerciantes judíos expulsados de España y Portugal que se asentaron en la ciudad. Si miráis hacia la otra orilla, veis las fachadas estrechas de Petit Bayonne." },
+            { id: 8, time: "14:30", title: "Petit Bayonne", mapQuery: "Pont Pannecau, Bayonne, France", directions: "Cruzad hacia Petit Bayonne por el Pont Pannecau y seguid por Rue Pannecau.", audioText: "Ahora estamos en Petit Bayonne, el barrio que nació en la Edad Media sobre terrenos marismosos. En el siglo XII se conocía como Bourg‑Neuf. Muchas casas se levantaban sobre pilotes de madera para protegerse de las crecidas. Fijaos en lo estrechas que son las parcelas y en cómo las casas crecen en altura, con fachadas entramadas pintadas en rojo o verde, colores que asociamos hoy a la identidad vasca." },
+            { id: 9, time: "15:00", title: "Callejeo por Petit Bayonne", mapQuery: "Rue des Cordeliers, Bayonne, France", directions: "Id entrando en el interior del barrio por calles como Rue Bourgneuf o Rue des Cordeliers.", audioText: "Estas calles son un auténtico laberinto. Durante siglos aquí vivieron artesanos, marineros y comerciantes procedentes de fuera: gascones, vascos, judíos sefardíes… Bayona fue un puerto cosmopolita. Si levantáis la vista veréis cómo las fachadas se inclinan ligeramente hacia la calle. En algunas casas, los pisos superiores avanzan sobre voladizos de madera, una solución muy típica de los cascos medievales." },
+            { id: 10, time: "15:30", title: "Iglesia de Saint‑André", mapQuery: "Église Saint-André de Bayonne, France", directions: "Id orientándoos hacia Place Paul Bert y la Église Saint‑André.", audioText: "Esta es la iglesia de Saint‑André, un templo neogótico construido a mediados del siglo XIX. A diferencia de la catedral, aquí estamos ante una reinterpretación del estilo gótico en la época en que Francia redescubre sus monumentos medievales. Fijaos en las dos torres gemelas y el gran rosetón central. En el interior la nave es amplia y luminosa, y el órgano del siglo XIX refuerza esa atmósfera solemne." },
+            { id: 11, time: "16:00", title: "Château‑Neuf", mapQuery: "Château-Neuf, Place Paul Bert, Bayonne, France", directions: "Desde Saint‑André, dirigíos hacia el Château‑Neuf (la fortaleza que domina el Petit Bayonne).", audioText: "El Château‑Neuf es la ‘fortaleza nueva’ de Bayona. Se levantó a finales de la Edad Media para reforzar la defensa de la ciudad por este flanco. Aunque hoy lo veamos integrado en el tejido urbano, hay que imaginarlo como una pieza clave de un dispositivo defensivo que controlaba el acceso por el Adour y la Nive para resistir los asedios modernos." },
+            { id: 12, time: "16:30", title: "Château‑Vieux", mapQuery: "Château-Vieux, Bayonne, France", directions: "Cruzad de nuevo hacia Grand Bayonne y subid hacia el Château‑Vieux, muy cerca de la catedral.", audioText: "Terminamos la ruta junto al Château‑Vieux, el ‘castillo viejo’ de Bayona. Esta fortaleza se empezó a levantar en el siglo XI sobre un antiguo castrum romano. En el siglo XVII se integró en el sistema de Vauban. Hoy sigue siendo recinto militar, pero su silueta resume muy bien la historia de Bayona: una ciudad donde se superponen capas romanas, medievales y modernas. Esa concentración de historia es lo que hace de Bayona una ciudad única." }
+        ];
+        function App() {
+            const [currentStopIndex, setCurrentStopIndex] = useState(0);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [view, setView] = useState('player');
+            const synthRef = useRef(window.speechSynthesis);
+            const currentStop = stops[currentStopIndex];
+            const generateFullItineraryUrl = () => {
+                const origin = encodeURIComponent("Allées Paulmy, Bayonne, France");
+                const destination = encodeURIComponent(stops[stops.length - 1].mapQuery);
+                const waypoints = stops.slice(0, -1).map(s => encodeURIComponent(s.mapQuery)).join('|');
+                return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`;
+            };
+            const togglePlay = () => {
+                if (isPlaying) {
+                    synthRef.current.cancel();
+                    setIsPlaying(false);
+                } else {
+                    const utterance = new SpeechSynthesisUtterance(currentStop.audioText);
+                    utterance.lang = 'es-ES';
+                    utterance.rate = 0.9;
+                    utterance.onend = () => setIsPlaying(false);
+                    synthRef.current.speak(utterance);
+                    setIsPlaying(true);
+                }
+            };
+            const openMap = (query) => {
+                const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+                window.open(url, '_blank');
+            };
+            return (
+                <div className="flex flex-col h-screen max-w-md mx-auto bg-slate-50 relative shadow-2xl border-x overflow-hidden">
+                    <div className="h-10 bg-red-700 w-full shrink-0"></div>
+                    <header className="bg-red-700 text-white p-4 shrink-0 flex justify-between items-center shadow-lg z-10">
+                        <div>
+                            <h1 className="font-bold text-xl leading-tight tracking-tight uppercase">Guía Bayona</h1>
+                            <p className="text-[10px] text-red-200 tracking-widest uppercase font-semibold">Ruta Histórica</p>
+                        </div>
+                        <div className="bg-white/20 px-3 py-1 rounded-full text-xs font-bold border border-white/10">
+                            {currentStopIndex + 1} / {stops.length}
+                        </div>
+                    </header>
+                    <main className="flex-1 overflow-y-auto no-scrollbar safe-bottom bg-slate-50">
+                        {view === 'player' && (
+                            <div className="p-6 space-y-6 fade-in">
+                                <div className="space-y-2">
+                                    <p className="text-red-600 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5">
+                                        <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
+                                        PARADA ACTUAL: {currentStop.time}H
+                                    </p>
+                                    <h2 className="text-3xl font-extrabold text-slate-800 leading-tight">{currentStop.title}</h2>
+                                </div>
+                                <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                                    <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Indicaciones</h3>
+                                    <p className="text-slate-600 text-sm leading-relaxed">{currentStop.directions}</p>
+                                    <button onClick={() => openMap(currentStop.mapQuery)} className="w-full bg-slate-900 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                                        VER UBICACIÓN
+                                    </button>
+                                </div>
+                                <div className="bg-white p-7 rounded-[2.5rem] border-l-4 border-red-600 shadow-md italic text-slate-700 text-lg leading-relaxed relative">
+                                    <span className="absolute -top-4 left-6 text-7xl text-slate-100 select-none -z-10 font-serif">“</span>
+                                    {currentStop.audioText}
+                                </div>
+                            </div>
+                        )}
+                        {view === 'list' && (
+                            <div className="p-4 space-y-3 fade-in">
+                                <h3 className="text-xs font-bold text-slate-400 px-2 mb-2 uppercase tracking-widest">Itinerario</h3>
+                                {stops.map((s, idx) => (
+                                    <button key={s.id} onClick={() => {setCurrentStopIndex(idx); setView('player');}} className={`w-full p-4 rounded-2xl flex items-center gap-4 transition-all ${idx === currentStopIndex ? 'bg-red-600 text-white shadow-xl' : 'bg-white border border-slate-100 text-slate-800'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${idx === currentStopIndex ? 'bg-white text-red-600' : 'bg-slate-50 text-slate-400'}`}>
+                                            {s.id}
+                                        </div>
+                                        <div className="text-left flex-1">
+                                            <p className="font-bold text-sm leading-tight">{s.title}</p>
+                                            <p className={`text-[10px] ${idx === currentStopIndex ? 'text-red-100' : 'text-slate-400'}`}>{s.time}H</p>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                        {view === 'map' && (
+                            <div className="p-6 space-y-8 fade-in">
+                                <div className="space-y-4">
+                                    <h2 className="text-3xl font-black text-slate-800">MAPAS Y ACCESOS</h2>
+                                    <p className="text-sm text-slate-500 leading-relaxed italic">Navega por la ciudad usando los accesos rápidos o inicia la ruta completa con navegación GPS.</p>
+                                </div>
+                                <div className="space-y-3">
+                                    <p className="text-[10px] font-bold text-red-600 uppercase tracking-widest px-1">Navegación Paso a Paso</p>
+                                    <a href={generateFullItineraryUrl()} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center w-full bg-red-600 text-white p-6 rounded-[2rem] shadow-xl shadow-red-200 transition-all active:scale-95 group">
+                                        <span className="text-2xl font-black uppercase tracking-tighter group-hover:scale-105 transition-transform">Iniciar Ruta Completa</span>
+                                        <span className="text-[10px] opacity-80 font-bold uppercase mt-1 tracking-widest">Abre las 12 paradas en Google Maps</span>
+                                    </a>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-end px-1">
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Accesos Individuales</p>
+                                        <span className="text-[10px] text-slate-300 font-bold italic">Pulsa para abrir mapa</span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {stops.map((s) => (
+                                            <button key={s.id} onClick={() => openMap(s.mapQuery)} className="bg-white border border-slate-100 p-3 rounded-2xl flex flex-col items-start gap-2 shadow-sm active:bg-slate-50 active:scale-95 transition-all text-left">
+                                                <div className="w-6 h-6 rounded-lg bg-slate-900 text-white text-[10px] font-black flex items-center justify-center">{s.id}</div>
+                                                <span className="text-[11px] font-bold text-slate-700 leading-tight line-clamp-2">{s.title}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="p-5 bg-yellow-50 rounded-3xl border border-yellow-100">
+                                    <p className="text-[10px] font-bold text-yellow-800 uppercase mb-1">Información Importante</p>
+                                    <p className="text-[11px] text-yellow-900 italic leading-relaxed">El itinerario completo está optimizado para ir <strong>a pie</strong>. Recuerda permitir que Google Maps use tu ubicación para una mejor experiencia.</p>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                    {view === 'player' && (
+                        <div className="fixed bottom-24 left-0 right-0 max-w-md mx-auto px-8 flex justify-between items-center z-40 pointer-events-none">
+                            <button onClick={() => setCurrentStopIndex(prev => Math.max(0, prev-1))} disabled={currentStopIndex === 0} className="w-14 h-14 glass rounded-full flex items-center justify-center text-slate-800 disabled:opacity-20 shadow-xl pointer-events-auto active:scale-90 transition-transform">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7"></path></svg>
+                            </button>
+                            <button onClick={togglePlay} className="w-24 h-24 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl shadow-red-600/40 pointer-events-auto active:scale-95 transition-all">
+                                {isPlaying ? <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg> : <svg className="w-10 h-10 ml-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>}
+                            </button>
+                            <button onClick={() => setCurrentStopIndex(prev => Math.min(stops.length-1, prev+1))} disabled={currentStopIndex === stops.length - 1} className="w-14 h-14 glass rounded-full flex items-center justify-center text-slate-800 disabled:opacity-20 shadow-xl pointer-events-auto active:scale-90 transition-transform">
+                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    )}
+                    <nav className="shrink-0 bg-white border-t border-slate-100 h-24 flex justify-around items-center px-6 safe-area-bottom z-50">
+                        {[
+                            { id: 'player', label: 'Escuchar', icon: 'M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z' },
+                            { id: 'list', label: 'Paradas', icon: 'M4 6h16M4 12h16M4 18h16' },
+                            { id: 'map', label: 'Mapa', icon: 'M9 20l-5.447-2.724A2 2 0 013 15.487V6.513a2 2 0 011.553-1.944L9 4m0 16l6-3m-6 3V4m6 13l5.447 2.724A2 2 0 0021 17.513V8.487a2 2 0 00-1.553-1.944L15 4m0 13V4m0 0L9 7' }
+                        ].map(item => (
+                            <button key={item.id} onClick={() => setView(item.id)} className={`flex flex-col items-center gap-1 transition-all ${view === item.id ? 'text-red-600' : 'text-slate-300'}`}>
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
+                                <span className="text-[9px] font-black uppercase tracking-tighter">{item.label}</span>
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
